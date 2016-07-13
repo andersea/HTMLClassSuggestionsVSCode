@@ -3,6 +3,14 @@
     "displayName": "HTML Class Suggestions",
     "description": "Adds code completion suggestions to HTML class attributes based on the CSS files in your workspace.",
     "version": "0.1.1",
+    "categories": [
+        "Languages",
+        "Other"
+    ],
+    "keywords": [
+        "html",
+        "css"
+    ],
     "publisher": "AndersEAndersen",
     "author": {
         "name": "Anders Ellenshøj Andersen",
@@ -21,9 +29,6 @@
     "engines": {
         "vscode": "^1.0.0"
     },
-    "categories": [
-        "Other"
-    ],
     "activationEvents": [
         "onLanguage:html"
     ],
