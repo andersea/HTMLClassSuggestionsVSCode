@@ -16,6 +16,10 @@ The extension is bundled with all necessary requirements, so it should be plug a
 
 ## Release Notes
 
+### 0.1.1
+
+Various minor packaging improvements.
+
 ### 0.1.0
 
 Initial release of html-class-suggestions.
