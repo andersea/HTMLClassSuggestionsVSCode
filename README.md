@@ -6,9 +6,11 @@ html-class-suggestions is a Visual Studio Code extension that provides completio
 
 Scans your workspace for css files and parses them for class names using the [css npm module](https://github.com/reworkcss/css).
 
-Scanning happens in the background when you open a html file. It should take a couple of seconds to complete, after which css class suggestions should be available in class attributes in your html. Each file is scanned separately in an asynchronous fashion using vscode's promise api.
+Scanning happens in the background when you open a html file. It should take a couple of seconds to complete, after which css class suggestions should be available in class attributes in your html.
 
 ![Screenshot 1](https://raw.githubusercontent.com/andersea/HTMLClassSuggestionsVSCode/master/images/Screenshot%201.png)
+
+Each css file is scanned and parsed separately and asynchronously using vscode's promise api. Files are not concatenated before parsing.
 
 ## Requirements
 
