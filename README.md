@@ -8,7 +8,7 @@ Scans your workspace for css files and parses them for class names using the [cs
 
 Scanning happens in the background when you open a html file. It should take a couple of seconds to complete, after which css class suggestions should be available in class attributes in your html. Each file is scanned separately in an asynchronous fashion using vscode's promise api.
 
-![Screenshot 1](images/Screenshot 1.png)
+![Screenshot 1](https://raw.githubusercontent.com/andersea/HTMLClassSuggestionsVSCode/master/images/Screenshot%201.png)
 
 ## Requirements
 
