@@ -18,6 +18,10 @@ The extension is bundled with all necessary requirements, so it should be plug a
 
 ## Release Notes
 
+### 0.1.2
+
+Fixed issue #1 - VSCode hangs when extension opens a large number of css files.
+
 ### 0.1.1
 
 Various minor packaging improvements.
