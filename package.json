@@ -1,51 +1,51 @@
 {
-    "name": "html-class-suggestions",
-    "displayName": "HTML Class Suggestions",
-    "description": "Adds code completion suggestions to HTML class attributes based on the CSS files in your workspace.",
-    "version": "0.1.1",
-    "categories": [
-        "Languages",
-        "Other"
-    ],
-    "keywords": [
-        "html",
-        "css"
-    ],
-    "publisher": "AndersEAndersen",
-    "author": {
-        "name": "Anders Ellenshøj Andersen",
-        "email": "andersa@atlab.dk"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/andersea/HTMLClassSuggestionsVSCode"
-    },
-    "bugs": {
-        "url": "https://github.com/andersea/HTMLClassSuggestionsVSCode/issues"
-    },
-    "icon": "images/icon.png",
-    "license": "MIT",
-    "preview": true,
-    "engines": {
-        "vscode": "^1.0.0"
-    },
-    "activationEvents": [
-        "onLanguage:html"
-    ],
-    "main": "./out/src/extension",
-    "scripts": {
-        "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
-        "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "clean": "rimraf out/src/*"
-    },
-    "devDependencies": {
-        "typescript": "^1.8.5",
-        "vscode": "^0.11.0",
-        "rimraf": "latest",
-        "tslint": "latest"
-    },
-    "dependencies": {
-        "css": "^2.2.1"
-    }
+  "name": "html-class-suggestions",
+  "displayName": "HTML Class Suggestions",
+  "description": "Adds code completion suggestions to HTML class attributes based on the CSS files in your workspace.",
+  "version": "0.1.2",
+  "categories": [
+    "Languages",
+    "Other"
+  ],
+  "keywords": [
+    "html",
+    "css"
+  ],
+  "publisher": "AndersEAndersen",
+  "author": {
+    "name": "Anders Ellenshøj Andersen",
+    "email": "andersa@atlab.dk"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andersea/HTMLClassSuggestionsVSCode"
+  },
+  "bugs": {
+    "url": "https://github.com/andersea/HTMLClassSuggestionsVSCode/issues"
+  },
+  "icon": "images/icon.png",
+  "license": "MIT",
+  "preview": true,
+  "engines": {
+    "vscode": "^1.0.0"
+  },
+  "activationEvents": [
+    "onLanguage:html"
+  ],
+  "main": "./out/src/extension",
+  "scripts": {
+    "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+    "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "clean": "rimraf out/src/*"
+  },
+  "devDependencies": {
+    "typescript": "^1.8.5",
+    "vscode": "^0.11.0",
+    "rimraf": "latest",
+    "tslint": "latest"
+  },
+  "dependencies": {
+    "css": "^2.2.1"
+  }
 }
