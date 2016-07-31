@@ -20,7 +20,7 @@ The extension is bundled with all necessary requirements, so it should be plug a
 
 ### 0.2.0
 
-Optimized parsing for projects with a lot of duplicate css files. See 8525aafee9f2f64ad1e39ceb78c38b91b59f0a9b.
+Optimized parsing for projects with a lot of duplicate css files. See [8525aaf](https://github.com/andersea/HTMLClassSuggestionsVSCode/commit/8525aafee9f2f64ad1e39ceb78c38b91b59f0a9b).
 
 ### 0.1.2
 
