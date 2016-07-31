@@ -46,6 +46,7 @@
     "tslint": "latest"
   },
   "dependencies": {
-    "css": "^2.2.1"
+    "css": "^2.2.1",
+    "xxhashjs": "^0.2.1"
   }
 }
