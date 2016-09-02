@@ -3,7 +3,11 @@ import * as vscode from 'vscode';
 import aggregator from './cssAggregator';
 
 export class CssCompletionItemProvider implements vscode.CompletionItemProvider {
-    private completionItems = aggregator().then(cssClasses => cssClasses.map(cssClass => new vscode.CompletionItem(cssClass)));
+    private completionItems: PromiseLike<vscode.CompletionItem[]>;
+
+    constructor() {
+        this.refreshCompletionItems();
+    }
 
     public provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): Thenable<vscode.CompletionItem[]> {
         let lineUntilPosition = document.getText(new vscode.Range(position.with(undefined, 0), position));
@@ -14,5 +18,9 @@ export class CssCompletionItemProvider implements vscode.CompletionItemProvider 
         } else {
             return Promise.resolve([]);
         }
+    }
+
+    public refreshCompletionItems() {
+        this.completionItems = aggregator().then(cssClasses => cssClasses.map(cssClass => new vscode.CompletionItem(cssClass)));
     }
 };
