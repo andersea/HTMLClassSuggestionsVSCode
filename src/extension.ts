@@ -10,15 +10,15 @@ export function activate(context: ExtensionContext) {
 
     let provider = new CssCompletionItemProvider();
 
-    let disposable = languages.registerCompletionItemProvider('html', provider);
-
-    let saveEventDisposable = workspace.onDidSaveTextDocument((e) => {
-        if(e.languageId === 'css') {
+    context.subscriptions.push(workspace.onDidSaveTextDocument((e) => {
+        if (e.languageId === 'css') {
             provider.refreshCompletionItems();
         }
-    })
+    }));
 
-    context.subscriptions.push(disposable, saveEventDisposable);
+    context.subscriptions.push(languages.registerCompletionItemProvider('html', provider));
+    context.subscriptions.push(languages.registerCompletionItemProvider('php', provider));
+
 }
 
 // this method is called when your extension is deactivated

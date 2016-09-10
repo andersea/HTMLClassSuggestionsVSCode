@@ -30,7 +30,8 @@
     "vscode": "^1.0.0"
   },
   "activationEvents": [
-    "onLanguage:html"
+    "onLanguage:html",
+    "onLanguage:php"
   ],
   "main": "./out/src/extension",
   "scripts": {
