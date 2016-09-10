@@ -25,7 +25,7 @@
   },
   "icon": "images/icon.png",
   "license": "MIT",
-  "preview": true,
+  "preview": false,
   "engines": {
     "vscode": "^1.0.0"
   },

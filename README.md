@@ -1,22 +1,26 @@
 # HTML Class Suggestions
 
-html-class-suggestions is a Visual Studio Code extension that provides completion options for html class attributes based on the css files in your workspace. It is similar to other extensions like [Zignd's](https://marketplace.visualstudio.com/search?term=publisher%3A%22Zignd%22&target=VSCode&sortBy=Relevance) [HTML CSS Class Completion](https://marketplace.visualstudio.com/items?itemName=Zignd.html-css-class-completion), but this extension is coded from scratch in typescript.
+html-class-suggestions is a Visual Studio Code extension that provides completion options for html class attributes based on the css files in your workspace.
 
 ## Features
 
-Scans your workspace for css files and parses them for class names using the [css npm module](https://github.com/reworkcss/css). It will also monitor if you make any changes to css files in your workspace, and refresh the available classes automatically.
-
-Scanning happens in the background when you open a html file. It should take a couple of seconds to complete, after which css class suggestions should be available in class attributes in your html.
+* Suggestions based on the css files in your workspace.
+* Monitors your workspace for css file changes and refreshes the suggestions if needed.
+* css parsing using the [css npm module](https://github.com/reworkcss/css).
+* Avoids parsing identical files by comparing file hash.
+* Language support: html, php
 
 ![Screenshot 1](https://raw.githubusercontent.com/andersea/HTMLClassSuggestionsVSCode/master/images/Screenshot%201.png)
-
-Each css file is scanned and parsed separately and asynchronously using vscode's promise api. Files are not concatenated before parsing. Additionally, parsing is optimized by computing a hash of each css file, thereby making sure identical css files are only parsed once.
 
 ## Requirements
 
 The extension is bundled with all necessary requirements, so it should be plug and play.
 
 ## Release Notes
+
+### 0.3.0
+
+Basic php support. - Issue #5.
 
 ### 0.2.1
 
