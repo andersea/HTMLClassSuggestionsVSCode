@@ -18,6 +18,10 @@ The extension is bundled with all necessary requirements, so it should be plug a
 
 ## Release Notes
 
+### 1.0.2
+
+Added a status bar notification when processing is completed.
+
 ### 1.0.0
  
 I am releasing this as v1.0.0. No longer a preview. This release includes basic php support. - Issue #5.
