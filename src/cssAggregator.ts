@@ -1,4 +1,4 @@
-import { workspace } from 'vscode'
+import { workspace, window } from 'vscode'
 import { parse, Rule } from 'css';
 import { readFile } from 'fs'
 let XXH = require('xxhashjs').h32;
@@ -95,6 +95,7 @@ export default function () {
             console.log(`Files processed: ${cssHashSet.size}`);
             console.log(`cssClasses discovered: ${uniqueCssClasses.length}`);
             
+            window.setStatusBarMessage(`HTML Class Suggestions processed ${cssHashSet.size} distinct css files and discovered ${uniqueCssClasses.length} css classes.`, 10000);
 
             return uniqueCssClasses;
         }, console.log);
