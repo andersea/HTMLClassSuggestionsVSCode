@@ -18,6 +18,10 @@ The extension is bundled with all necessary requirements, so it should be plug a
 
 ## Release Notes
 
+### 1.0.3
+
+Fixed handling of css media rules. Classes defined within media rules should now be correctly picked up by the aggregator.
+
 ### 1.0.2
 
 Added a status bar notification when processing is completed.
