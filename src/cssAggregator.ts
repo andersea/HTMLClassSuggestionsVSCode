@@ -1,5 +1,5 @@
 import { workspace, window } from 'vscode'
-import { parse, Rule } from 'css';
+import { parse, Stylesheet, Rule, Media } from 'css';
 import { readFile } from 'fs'
 let XXH = require('xxhashjs').h32;
 
@@ -8,6 +8,21 @@ function flatten<T>(nestedArray: T[][]): T[] {
         throw new RangeError("Can't flatten an empty array.");
     } else {
         return nestedArray.reduce((a, b) => a.concat(b));
+    }
+}
+
+function findRootRules(cssAST: Stylesheet): Rule[] {
+    return cssAST.stylesheet.rules.filter(node => (<Rule>node).type === 'rule');
+}
+
+function findMediaRules(cssAST: Stylesheet): Rule[] {
+    let mediaNodes = <Rule[]>(cssAST.stylesheet.rules.filter(node => {
+        return (<Rule>node).type === 'media';
+    }));
+    if(mediaNodes.length > 0) {
+        return flatten(mediaNodes.map(node => (<Media>node).rules));
+    } else {
+        return [];
     }
 }
 
@@ -66,7 +81,11 @@ export default function () {
         let rulesPromise = cssASTsPromise.then(cssASTs => {
             if (cssASTs.length > 0) {
                 return flatten(cssASTs.map(
-                    cssAST => <Rule[]>(cssAST.stylesheet.rules.filter(node => (<Rule>node).type === 'rule'))
+                    cssAST => {
+                        let rootRules = findRootRules(cssAST);
+                        let mediaRules = findMediaRules(cssAST);
+                        return rootRules.concat(mediaRules);
+                    }
                 ))
             } else {
                 return [];
@@ -94,7 +113,7 @@ export default function () {
             console.log(`Elapsed time: ${elapsedTime[0]} s ${Math.trunc(elapsedTime[1] / 1e6)} ms`);
             console.log(`Files processed: ${cssHashSet.size}`);
             console.log(`cssClasses discovered: ${uniqueCssClasses.length}`);
-            
+
             window.setStatusBarMessage(`HTML Class Suggestions processed ${cssHashSet.size} distinct css files and discovered ${uniqueCssClasses.length} css classes.`, 10000);
 
             return uniqueCssClasses;
