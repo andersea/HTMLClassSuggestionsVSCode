@@ -31,7 +31,8 @@
   },
   "activationEvents": [
     "onLanguage:html",
-    "onLanguage:php"
+    "onLanguage:php",
+    "onLanguage:vue"
   ],
   "main": "./out/src/extension",
   "scripts": {
