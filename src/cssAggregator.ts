@@ -19,7 +19,7 @@ function findMediaRules(cssAST: Stylesheet): Rule[] {
     let mediaNodes = <Rule[]>(cssAST.stylesheet.rules.filter(node => {
         return (<Rule>node).type === 'media';
     }));
-    if(mediaNodes.length > 0) {
+    if (mediaNodes.length > 0) {
         return flatten(mediaNodes.map(node => (<Media>node).rules));
     } else {
         return [];
@@ -74,7 +74,14 @@ export default function () {
         );
 
         let cssASTsPromise = uniqueCssTextsPromise.then(
-            uniqueCssTexts => uniqueCssTexts.map(cssText => parse(cssText)),
+            uniqueCssTexts => uniqueCssTexts.map(cssText => {
+                try {
+                    return parse(cssText);
+                } catch (Error) {
+                    return undefined;
+                }
+
+            }).filter(cssAST => cssAST !== undefined),
             console.log
         );
 
@@ -94,14 +101,15 @@ export default function () {
 
         let selectorsPromise = rulesPromise.then(rules => {
             if (rules.length > 0) {
-                return flatten(rules.map(rule => rule.selectors));
+                return flatten(rules.map(rule => rule.selectors)).filter(value => value && value.length > 0);
             } else {
                 return [];
             }
         }, console.log);
 
-        let cssClassesPromise = selectorsPromise.then(selectors =>
-            selectors.map(selector => findClassName(selector)).filter(value => value !== ""),
+        let cssClassesPromise = selectorsPromise.then(selectors => {
+            return selectors.map(selector => findClassName(selector)).filter(value => value && value.length > 0)
+        },
             console.log
         );
 
