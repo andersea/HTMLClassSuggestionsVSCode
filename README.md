@@ -9,6 +9,7 @@ html-class-suggestions is a Visual Studio Code extension that provides completio
 * css parsing using the [css npm module](https://github.com/reworkcss/css).
 * Avoids parsing identical files by comparing file hash.
 * Language support: html, php
+* View library support: Vue (new in 1.0.4!)
 
 ![Screenshot 1](https://raw.githubusercontent.com/andersea/HTMLClassSuggestionsVSCode/master/images/Screenshot%201.png)
 
@@ -17,6 +18,11 @@ html-class-suggestions is a Visual Studio Code extension that provides completio
 The extension is bundled with all necessary requirements, so it should be plug and play.
 
 ## Release Notes
+
+### 1.0.4
+
+Basic Vue support - Suggestions should now be available in html templates in vue components.
+Hardened the css aggregator against malformed css which could break parsing completely in certain cases.
 
 ### 1.0.3
 
