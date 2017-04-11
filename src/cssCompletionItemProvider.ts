@@ -16,7 +16,7 @@ export class CssCompletionItemProvider implements vscode.CompletionItemProvider 
         if (textAfterClassAttributeStart.length > 1 && attributeClosed === -1) {
             return this.completionItems;
         } else {
-            return Promise.resolve([]);
+            return Promise.reject<vscode.CompletionItem[]>("Not inside html class attribute.");
         }
     }
 
