@@ -42,6 +42,16 @@ function findClassName(selector: string): string {
     }
 }
 
+function sanitizeClassName(className: string): string {
+    return className.replace(/\\[!"#$%&'()*+,\-./:;<=>?@[\\\]^`{|}~]/, (substr, ...args) => {
+        if (args.length === 2) {
+            return substr.slice(1);
+        } else {
+            return substr;
+        }
+    });
+}
+
 export default function () {
 
     let startTime = process.hrtime();
@@ -108,7 +118,10 @@ export default function () {
         }, console.log);
 
         let cssClassesPromise = selectorsPromise.then(selectors => {
-            return selectors.map(selector => findClassName(selector)).filter(value => value && value.length > 0)
+            return selectors
+                .map(selector => findClassName(selector))
+                .filter(value => value && value.length > 0)
+                .map(className => sanitizeClassName(className))
         },
             console.log
         );
