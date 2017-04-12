@@ -1,56 +1,9 @@
 import { workspace, window } from 'vscode'
 import { parse, Stylesheet, Rule, Media } from 'css';
-import { readFile } from 'fs'
+import { readFile } from 'fs';
+import { flatten } from './arrayUtils';
+import { findRootRules, findMediaRules, findClassName, sanitizeClassName } from './cssUtils';
 let XXH = require('xxhashjs').h32;
-
-function flatten<T>(nestedArray: T[][]): T[] {
-    if (nestedArray.length === 0) {
-        throw new RangeError("Can't flatten an empty array.");
-    } else {
-        return nestedArray.reduce((a, b) => a.concat(b));
-    }
-}
-
-function findRootRules(cssAST: Stylesheet): Rule[] {
-    return cssAST.stylesheet.rules.filter(node => (<Rule>node).type === 'rule');
-}
-
-function findMediaRules(cssAST: Stylesheet): Rule[] {
-    let mediaNodes = <Rule[]>(cssAST.stylesheet.rules.filter(node => {
-        return (<Rule>node).type === 'media';
-    }));
-    if (mediaNodes.length > 0) {
-        return flatten(mediaNodes.map(node => (<Media>node).rules));
-    } else {
-        return [];
-    }
-}
-
-function findClassName(selector: string): string {
-    let classNameStartIndex = selector.lastIndexOf('.');
-    if (classNameStartIndex >= 0) {
-        let classText = selector.substr(classNameStartIndex + 1);
-        // Search for one of ' ', '[', ':' or '>'
-        let classNameEndIndex = classText.search(/[\s\[:>]/);
-        if (classNameEndIndex >= 0) {
-            return classText.substr(0, classNameEndIndex);
-        } else {
-            return classText;
-        }
-    } else {
-        return "";
-    }
-}
-
-function sanitizeClassName(className: string): string {
-    return className.replace(/\\[!"#$%&'()*+,\-./:;<=>?@[\\\]^`{|}~]/, (substr, ...args) => {
-        if (args.length === 2) {
-            return substr.slice(1);
-        } else {
-            return substr;
-        }
-    });
-}
 
 export default function () {
 
