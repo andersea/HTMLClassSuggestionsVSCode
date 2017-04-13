@@ -32,6 +32,10 @@ The extension is bundled with all necessary requirements, so it should be plug a
 
 ## Release Notes
 
+### 1.0.7
+
+* Yet another small fix for [#10](https://github.com/andersea/HTMLClassSuggestionsVSCode/issues/10).
+
 ### 1.0.6
 
 * Testability branch merged.
