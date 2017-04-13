@@ -8,17 +8,17 @@ export function flatten<T>(nestedArray: T[][]): T[] {
     }
 }
 
-export function distinct<T>(items: T[]): T[] {
-    return Array.from(new Set(items));
+export function distinct<T>(items: T[]|Thenable<T[]>): Thenable<T[]> {
+    return Promise.resolve(items).then(items => Array.from(new Set(items)));
 }
 
-export function distinctByXXHash<T>(items: T[]): T[] {
+export function distinctByXXHash<T>(items: T[]|Thenable<T[]>): Thenable<T[]> {
     const initialValue = {
         distinctItems: <T[]>[],
         hashSet: new Set()
     };
 
-    const accumulator = items.reduce((acc, item) => {
+    const accumulatorPromise = Promise.resolve(items).then(items => items.reduce((acc, item) => {
         const hash = XXH(item, 0x1337).toNumber();
 
         if (!acc.hashSet.has(hash)) {
@@ -27,7 +27,7 @@ export function distinctByXXHash<T>(items: T[]): T[] {
         }
 
         return acc;
-    }, initialValue);
+    }, initialValue));
 
-    return accumulator.distinctItems;
+    return accumulatorPromise.then(accumulator => accumulator.distinctItems);
 }
