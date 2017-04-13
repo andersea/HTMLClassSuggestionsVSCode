@@ -1,5 +1,58 @@
-import { Stylesheet, Rule, Media } from 'css';
+import { parse, Stylesheet, Rule, Media } from 'css';
 import { flatten } from './arrayUtils';
+
+
+export interface CSSTextsParseResult {
+    styleSheets: Stylesheet[];
+    unparsable: string[];
+}
+
+export function parseCssTexts(cssTexts: string[] | Thenable<string[]>): Thenable<CSSTextsParseResult> {
+    const initialValue = {
+        styleSheets: <Stylesheet[]>[],
+        unparsable: <string[]>[]
+    };
+
+    return Promise.resolve(cssTexts).then(cssTexts => cssTexts.reduce((acc, cssText) => {
+        try {
+            acc.styleSheets.push(parse(cssText));
+        } catch (error) {
+            acc.unparsable.push(cssText);
+        }
+        return acc;
+    }, initialValue));
+}
+
+export function getCSSRules(styleSheets: Stylesheet[] | Thenable<Stylesheet[]>): Thenable<Rule[]> {
+    return Promise.resolve(styleSheets).then(styleSheets => styleSheets.reduce((acc, styleSheet) => {
+        return acc.concat(
+            findRootRules(styleSheet),
+            findMediaRules(styleSheet)
+        );
+    }, []));
+}
+
+export function getCSSSelectors(rules: Rule[] | Thenable<Rule[]>): Thenable<string[]> {
+    return Promise.resolve(rules).then(rules => {
+        if (rules.length > 0) {
+            return flatten(rules.map(rule => rule.selectors)).filter(value => value && value.length > 0);
+        } else {
+            return [];
+        }
+    });
+}
+
+export function getCSSClasses(selectors: string[]|Thenable<string[]>): Thenable<string[]> {
+    return Promise.resolve(selectors).then(selectors => selectors.reduce((acc, selector) => {
+        const className = findClassName(selector);
+
+        if (className && className.length > 0) {
+            acc.push(sanitizeClassName(className));
+        }
+
+        return acc;
+    }, []));
+}
 
 export function findRootRules(cssAST: Stylesheet): Rule[] {
     return cssAST.stylesheet.rules.filter(node => (<Rule>node).type === 'rule');
