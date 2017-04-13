@@ -1,96 +1,91 @@
 import { workspace, window } from 'vscode'
 import { parse, Stylesheet, Rule, Media } from 'css';
-import { readFile } from 'fs';
-import { flatten } from './arrayUtils';
-import { findRootRules, findMediaRules, findClassName, sanitizeClassName } from './cssUtils';
-let XXH = require('xxhashjs').h32;
+import * as arrayUtils from './arrayUtils';
+import * as cssUtils from './cssUtils';
+import uriFilesReader from './uriFilesReader';
+
+interface CSSTextsParseResult {
+    styleSheets: Stylesheet[];
+    unparsable: string[];
+}
+
+function parseCssTexts(cssTexts: string[]): CSSTextsParseResult {
+    const initialValue = {
+        styleSheets: <Stylesheet[]>[],
+        unparsable: <string[]>[]
+    };
+
+    return cssTexts.reduce((acc, cssText) => {
+        try {
+            acc.styleSheets.push(parse(cssText));
+        } catch (error) {
+            acc.unparsable.push(cssText);
+        }
+        return acc;
+    }, initialValue);
+}
+
+function getCSSRules(styleSheets: Stylesheet[]): Rule[] {
+    return styleSheets.reduce((acc, styleSheet) => {
+        return acc.concat(
+            cssUtils.findRootRules(styleSheet),
+            cssUtils.findMediaRules(styleSheet)
+        );
+    }, []);
+}
+
+function getCSSSelectors(rules: Rule[]): string[] {
+    if (rules.length > 0) {
+        return arrayUtils.flatten(rules.map(rule => rule.selectors)).filter(value => value && value.length > 0);
+    } else {
+        return [];
+    }
+}
+
+function getCSSClasses(selectors: string[]): string[] {
+    return selectors.reduce((acc, selector) => {
+        const className = cssUtils.findClassName(selector);
+
+        if (className && className.length > 0) {
+            acc.push(cssUtils.sanitizeClassName(className));
+        }
+
+        return acc;
+    }, []);
+}
 
 export default function () {
 
-    let startTime = process.hrtime();
-    let cssHashSet = new Set();
+    const startTime = process.hrtime();
 
-    return workspace.findFiles('**/*.css', '').then(uris => {
+    const cssTextsPromise = uriFilesReader(
+        workspace.findFiles('**/*.css', ''),
+        workspace.getConfiguration('files').get('encoding', 'utf8')
+    );
 
-        let cssTextPromises = uris.map(uri =>
-            <PromiseLike<string>>new Promise<string>((resolve, reject) =>
-                readFile(uri.fsPath, workspace.getConfiguration('files').get('encoding'), (err, data) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(data.toString());
-                    }
-                })
-            )
-        );
+    const distinctCSSTextsPromise = cssTextsPromise.then(cssTexts => arrayUtils.distinctByXXHash(cssTexts));
 
-        let uniqueCssTextsPromise = Promise.all(cssTextPromises).then(
-            cssTexts => cssTexts.filter(cssText => {
-                let hash = XXH(cssText, 0x1337).toNumber();
-                if (cssHashSet.has(hash)) {
-                    return false;
-                } else {
-                    cssHashSet.add(hash);
-                    return true;
-                }
-            })
-        );
+    const parseResultPromise = distinctCSSTextsPromise.then(distinctCSSTexts => parseCssTexts(distinctCSSTexts));
 
-        let cssASTsPromise = uniqueCssTextsPromise.then(
-            uniqueCssTexts => uniqueCssTexts.map(cssText => {
-                try {
-                    return parse(cssText);
-                } catch (Error) {
-                    return undefined;
-                }
+    const rulesPromise = parseResultPromise.then(parseResult => getCSSRules(parseResult.styleSheets));
 
-            }).filter(cssAST => cssAST !== undefined),
-            console.log
-        );
+    const selectorsPromise = rulesPromise.then(rules => getCSSSelectors(rules));
 
-        let rulesPromise = cssASTsPromise.then(cssASTs => {
-            if (cssASTs.length > 0) {
-                return flatten(cssASTs.map(
-                    cssAST => {
-                        let rootRules = findRootRules(cssAST);
-                        let mediaRules = findMediaRules(cssAST);
-                        return rootRules.concat(mediaRules);
-                    }
-                ))
-            } else {
-                return [];
-            }
-        }, console.log);
+    const cssClassesPromise = selectorsPromise.then(selectors => getCSSClasses(selectors));
 
-        let selectorsPromise = rulesPromise.then(rules => {
-            if (rules.length > 0) {
-                return flatten(rules.map(rule => rule.selectors)).filter(value => value && value.length > 0);
-            } else {
-                return [];
-            }
-        }, console.log);
+    const distinctCssClassesPromise = cssClassesPromise.then(cssClasses => arrayUtils.distinct(cssClasses));
 
-        let cssClassesPromise = selectorsPromise.then(selectors => {
-            return selectors
-                .map(selector => findClassName(selector))
-                .filter(value => value && value.length > 0)
-                .map(className => sanitizeClassName(className))
-        },
-            console.log
-        );
+    return distinctCssClassesPromise.then(distinctCssClasses => {
+        const elapsedTime = process.hrtime(startTime);
 
-        return cssClassesPromise.then(cssClasses => {
-            let uniqueCssClasses = Array.from(new Set(cssClasses));
-
-            let elapsedTime = process.hrtime(startTime);
-
+        parseResultPromise.then(parseResult => {
             console.log(`Elapsed time: ${elapsedTime[0]} s ${Math.trunc(elapsedTime[1] / 1e6)} ms`);
-            console.log(`Files processed: ${cssHashSet.size}`);
-            console.log(`cssClasses discovered: ${uniqueCssClasses.length}`);
+            console.log(`Files processed: ${parseResult.styleSheets.length}`);
+            console.log(`cssClasses discovered: ${distinctCssClasses.length}`);
 
-            window.setStatusBarMessage(`HTML Class Suggestions processed ${cssHashSet.size} distinct css files and discovered ${uniqueCssClasses.length} css classes.`, 10000);
+            window.setStatusBarMessage(`HTML Class Suggestions processed ${parseResult.styleSheets.length} distinct css files and discovered ${distinctCssClasses.length} css classes.`, 10000);
+        })
 
-            return uniqueCssClasses;
-        }, console.log);
-    }, console.log);
+        return distinctCssClasses;
+    });
 }
