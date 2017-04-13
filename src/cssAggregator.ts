@@ -81,7 +81,8 @@ export default function () {
         parseResultPromise.then(parseResult => {
             console.log(`Elapsed time: ${elapsedTime[0]} s ${Math.trunc(elapsedTime[1] / 1e6)} ms`);
             console.log(`Files processed: ${parseResult.styleSheets.length}`);
-            console.log(`cssClasses discovered: ${distinctCssClasses.length}`);
+            console.log(`Skipped due to parse errors: ${parseResult.unparsable.length}`)
+            console.log(`CSS classes discovered: ${distinctCssClasses.length}`);
 
             window.setStatusBarMessage(`HTML Class Suggestions processed ${parseResult.styleSheets.length} distinct css files and discovered ${distinctCssClasses.length} css classes.`, 10000);
         })
