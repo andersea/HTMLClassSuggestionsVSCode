@@ -2,7 +2,7 @@
   "name": "html-class-suggestions",
   "displayName": "HTML Class Suggestions",
   "description": "Adds code completion suggestions to HTML class attributes based on the CSS files in your workspace.",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "categories": [
     "Languages",
     "Other"
