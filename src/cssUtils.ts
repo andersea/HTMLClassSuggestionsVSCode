@@ -33,7 +33,7 @@ export function findClassName(selector: string): string {
 }
 
 export function sanitizeClassName(className: string): string {
-    return className.replace(/\\[!"#$%&'()*+,\-./:;<=>?@[\\\]^`{|}~]/, (substr, ...args) => {
+    return className.replace(/\\[!"#$%&'()*+,\-./:;<=>?@[\\\]^`{|}~]/g, (substr, ...args) => {
         if (args.length === 2) {
             return substr.slice(1);
         } else {

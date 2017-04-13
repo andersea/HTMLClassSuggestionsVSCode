@@ -31,5 +31,8 @@ suite('Test cssUtils', () => {
         test('sanitizes \'margin\\@palm\' to \'margin@palm\'', () =>{
             assert.equal(sanitizeClassName('margin\\@palm'), 'margin@palm');
         });
+        test('sanitizes \'foo-1\\/2\\@bar\' to \'foo-1/2@bar\'', () =>{
+            assert.equal(sanitizeClassName('foo-1\\/2\\@bar'), 'foo-1/2@bar');
+        });
     });
 });
