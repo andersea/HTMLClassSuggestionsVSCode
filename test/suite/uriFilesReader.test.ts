@@ -1,4 +1,4 @@
-import uriFilesReader from "../src/uriFilesReader";
+import uriFilesReader from "../../src/uriFilesReader";
 import * as assert from "assert";
 import { Uri } from "vscode";
 
