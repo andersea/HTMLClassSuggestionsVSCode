@@ -17,6 +17,7 @@ export function activate(context: ExtensionContext) {
     }));
 
     context.subscriptions.push(languages.registerCompletionItemProvider('html', provider));
+    context.subscriptions.push(languages.registerCompletionItemProvider('cshtml', provider));
     context.subscriptions.push(languages.registerCompletionItemProvider('php', provider));
     context.subscriptions.push(languages.registerCompletionItemProvider('vue', provider));
 
