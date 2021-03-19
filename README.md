@@ -2,26 +2,13 @@
 
 html-class-suggestions is a Visual Studio Code extension that provides completion options for html class attributes based on the css files in your workspace.
 
-## Important VS Code v1.11.x
-
-In v1.11 Microsoft implemented a change that makes intellisense a lot less eager in requesting suggestions from completion providers.
-
-See release notes - https://code.visualstudio.com/updates/v1_11#_intellisense-in-comments
-
-This unfortunately had the unintentional side effect of disabling automatic suggestions for this and all similar VS Code extensions. At the moment there are two known workarounds for this:
-
-1. Suggestions can be called up manually using ctrl+space.
-2. You can change the configuration setting described in the above release notes and set the `strings` option to `true`. This reenables the old behaviour.
-
-More info here: [Microsoft/vscode#24464](https://github.com/Microsoft/vscode/issues/24464)
-
 ## Features
 
 * Suggestions based on the css files in your workspace.
 * Monitors your workspace for css file changes and refreshes the suggestions if needed.
 * css parsing using the [css npm module](https://github.com/reworkcss/css).
 * Avoids parsing identical files by comparing file hash.
-* Language support: html, php
+* Language support: html, cshtml (new in 1.1.0), php
 * View library support: Vue (new in 1.0.4!)
 
 ![Screenshot 1](https://raw.githubusercontent.com/andersea/HTMLClassSuggestionsVSCode/master/images/Screenshot%201.png)
@@ -31,6 +18,12 @@ More info here: [Microsoft/vscode#24464](https://github.com/Microsoft/vscode/iss
 The extension is bundled with all necessary requirements, so it should be plug and play.
 
 ## Release Notes
+
+### 1.1.0
+
+* All dependencies upgraded.
+* Test folder restructured to use vscode-test
+* Adds support for razor templates (cshtml)
 
 ### 1.0.7
 
