@@ -32,6 +32,9 @@ export class CssCompletionItemProvider
         completionItem.detail = `Insert ${cssClass}`;
         completionItem.insertText = cssClass;
         completionItem.kind = vscode.CompletionItemKind.Value;
+
+        // make sure our completion item group are first
+        completionItem.preselect = true;
         return completionItem;
       });
       return completionItems;
