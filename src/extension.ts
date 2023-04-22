@@ -31,7 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.languages.registerCompletionItemProvider('typescriptreact', provider)
   );
   context.subscriptions.push(
-    vscode.languages.registerCompletionItemProvider('javascriptreact', provider)
+    vscode.languages.registerCompletionItemProvider('javascript', provider)
   );
 }
 

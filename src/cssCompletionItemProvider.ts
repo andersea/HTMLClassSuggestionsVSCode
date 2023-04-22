@@ -39,12 +39,17 @@ export class CssCompletionItemProvider
   }
 }
 
+type AttributeName = 'class' | 'className';
 function canTriggerCompletion(
   document: vscode.TextDocument,
   position: vscode.Position
 ): boolean {
-  const attributeName =
-    document.languageId === 'typescriptreact' ? 'className' : 'class';
+  const attributeName: AttributeName = [
+    'typescriptreact',
+    'javascriptreact',
+  ].includes(document.languageId)
+    ? 'className'
+    : 'class';
 
   const lineUntilCursorPosition = getLineUntilPosition(document, position);
   const textAfterAttributeStart = getTextAfterAttributeStart(
@@ -71,13 +76,16 @@ function getLineUntilPosition(
 
 function getTextAfterAttributeStart(
   lineUntilPosition: string,
-  attributeName: string
+  attributeName: AttributeName
 ): string {
   const lastAttributeOccurrence = lineUntilPosition.lastIndexOf(attributeName);
   return lineUntilPosition.substr(lastAttributeOccurrence);
 }
 
-function isAttributeClosed(text: string, attributeName: string): boolean {
+function isAttributeClosed(
+  text: string,
+  attributeName: AttributeName
+): boolean {
   const attributeRegex = new RegExp(
     `${attributeName}=(?:\"[a-zA-Z0-9-\\s]*\"|\'[a-zA-Z0-9-\\s]*\'|.*[=>])`
   );
