@@ -33,7 +33,9 @@
     "onLanguage:html",
     "onLanguage:cshtml",
     "onLanguage:php",
-    "onLanguage:vue"
+    "onLanguage:vue",
+    "onLanguage:typescriptreact",
+    "onLanguage:javascript"
   ],
   "main": "./out/src/extension",
   "scripts": {
