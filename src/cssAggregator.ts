@@ -1,4 +1,4 @@
-import { workspace, window } from 'vscode'
+import { workspace, window } from 'vscode';
 import flow = require('lodash.flow');
 import uriFilesReader from './uriFilesReader';
 import { distinct, distinctByXXHash } from './arrayUtils';
@@ -21,12 +21,12 @@ export default function (): Thenable<string[]> {
 
             console.log(`Elapsed time: ${elapsedTime[0]} s ${Math.trunc(elapsedTime[1] / 1e6)} ms`);
             console.log(`Files processed: ${parseResult.styleSheets.length}`);
-            console.log(`Skipped due to parse errors: ${parseResult.unparsable.length}`)
+            console.log(`Skipped due to parse errors: ${parseResult.unparsable.length}`);
             console.log(`CSS classes discovered: ${distinctCssClasses.length}`);
 
             window.setStatusBarMessage(`HTML Class Suggestions processed ${parseResult.styleSheets.length} distinct css files and discovered ${distinctCssClasses.length} css classes.`, 10000);
 
             return distinctCssClasses;
         });
-    })
+    });
 }

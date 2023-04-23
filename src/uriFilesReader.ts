@@ -1,7 +1,7 @@
 import { Uri } from "vscode";
 import { readFile } from "fs";
 
-export default (uris: Uri[]|Thenable<Uri[]>, encoding: string): Thenable<string[]> => {
+export default (uris: Uri[]|Thenable<Uri[]>, encoding: BufferEncoding): Thenable<string[]> => {
     return Promise.resolve(uris).then(uris => {
         return Promise.all(uris.map(uri => new Promise<string>((resolve, reject) => {
             readFile(uri.fsPath, encoding, (err, data) => {
@@ -10,7 +10,7 @@ export default (uris: Uri[]|Thenable<Uri[]>, encoding: string): Thenable<string[
                 } else {
                     resolve(data.toString());
                 }
-            })
+            });
         })));
     });
-}
+};

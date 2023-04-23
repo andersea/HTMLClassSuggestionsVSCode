@@ -29,13 +29,13 @@ export function getCSSRules(styleSheets: Stylesheet[] | Thenable<Stylesheet[]>):
             findRootRules(styleSheet),
             findMediaRules(styleSheet)
         );
-    }, []));
+    }, [] as Rule[]));
 }
 
 export function getCSSSelectors(rules: Rule[] | Thenable<Rule[]>): Thenable<string[]> {
     return Promise.resolve(rules).then(rules => {
         if (rules.length > 0) {
-            return flatten(rules.map(rule => rule.selectors)).filter(value => value && value.length > 0);
+            return flatten(rules.map(rule => rule.selectors!)).filter(value => value && value.length > 0);
         } else {
             return [];
         }
@@ -51,19 +51,19 @@ export function getCSSClasses(selectors: string[]|Thenable<string[]>): Thenable<
         }
 
         return acc;
-    }, []));
+    }, [] as string[]));
 }
 
 export function findRootRules(cssAST: Stylesheet): Rule[] {
-    return cssAST.stylesheet.rules.filter(node => (<Rule>node).type === 'rule');
+    return cssAST.stylesheet!.rules.filter(node => (<Rule>node).type === 'rule');
 }
 
 export function findMediaRules(cssAST: Stylesheet): Rule[] {
-    let mediaNodes = <Rule[]>(cssAST.stylesheet.rules.filter(node => {
+    let mediaNodes = <Rule[]>(cssAST.stylesheet!.rules.filter(node => {
         return (<Rule>node).type === 'media';
     }));
     if (mediaNodes.length > 0) {
-        return flatten(mediaNodes.map(node => (<Media>node).rules));
+        return flatten(mediaNodes.map(node => (<Media>node).rules!));
     } else {
         return [];
     }
