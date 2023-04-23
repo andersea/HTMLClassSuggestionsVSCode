@@ -9,7 +9,7 @@ html-class-suggestions is a Visual Studio Code extension that provides completio
 * css parsing using the [css npm module](https://github.com/reworkcss/css).
 * Avoids parsing identical files by comparing file hash.
 * Language support: html, cshtml (new in 1.1.0), php
-* View library support: Vue (new in 1.0.4!)
+* View library support: Vue, **React (new in 1.2.0, thanks to [Marko Vujanic](https://github.com/ultrox))**
 
 ![Screenshot 1](https://raw.githubusercontent.com/andersea/HTMLClassSuggestionsVSCode/master/images/Screenshot%201.png)
 
