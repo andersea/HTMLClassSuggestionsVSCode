@@ -7,33 +7,33 @@ import { CssCompletionItemProvider } from './cssCompletionItemProvider';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-  let provider = new CssCompletionItemProvider();
+    let provider = new CssCompletionItemProvider();
 
-  context.subscriptions.push(
-    vscode.workspace.onDidSaveTextDocument((e) => {
-      if (e.languageId === 'css') {
-        provider.refreshCompletionItems();
-      }
-    })
-  );
+    context.subscriptions.push(
+        vscode.workspace.onDidSaveTextDocument((e) => {
+            if (e.languageId === 'css') {
+                provider.refreshCompletionItems();
+            }
+        })
+    );
 
-  context.subscriptions.push(
-    vscode.languages.registerCompletionItemProvider('html', provider)
-  );
-  context.subscriptions.push(
-    vscode.languages.registerCompletionItemProvider('cshtml', provider)
-  );
-  context.subscriptions.push(
-    vscode.languages.registerCompletionItemProvider('php', provider)
-  );
-  context.subscriptions.push(vscode.languages.registerCompletionItemProvider('vue', provider));
-  context.subscriptions.push(
-    vscode.languages.registerCompletionItemProvider('typescriptreact', provider)
-  );
-  context.subscriptions.push(
-    vscode.languages.registerCompletionItemProvider('javascript', provider)
-  );
+    context.subscriptions.push(
+        vscode.languages.registerCompletionItemProvider('html', provider)
+    );
+    context.subscriptions.push(
+        vscode.languages.registerCompletionItemProvider('cshtml', provider)
+    );
+    context.subscriptions.push(
+        vscode.languages.registerCompletionItemProvider('php', provider)
+    );
+    context.subscriptions.push(vscode.languages.registerCompletionItemProvider('vue', provider));
+    context.subscriptions.push(
+        vscode.languages.registerCompletionItemProvider('typescriptreact', provider)
+    );
+    context.subscriptions.push(
+        vscode.languages.registerCompletionItemProvider('javascript', provider)
+    );
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
