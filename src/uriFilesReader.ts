@@ -10,7 +10,7 @@ export default (uris: Uri[]|Thenable<Uri[]>, encoding: BufferEncoding): Thenable
                 } else {
                     resolve(data.toString());
                 }
-            })
+            });
         })));
     });
-}
+};

@@ -4,7 +4,7 @@ import aggregator from './cssAggregator';
 
 export class CssCompletionItemProvider
     implements vscode.CompletionItemProvider {
-    private completionItems: PromiseLike<vscode.CompletionItem[]>;
+    private completionItems?: PromiseLike<vscode.CompletionItem[]>;
 
     constructor() {
         this.refreshCompletionItems();
@@ -16,7 +16,7 @@ export class CssCompletionItemProvider
         token: vscode.CancellationToken
     ): Thenable<vscode.CompletionItem[]> {
         if (canTriggerCompletion(document, position)) {
-            return this.completionItems;
+            return this.completionItems as PromiseLike<vscode.CompletionItem[]>;
         } else {
             return Promise.reject<vscode.CompletionItem[]>(
                 'Not inside html class attribute.'

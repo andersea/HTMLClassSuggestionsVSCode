@@ -1,4 +1,4 @@
-import { findClassName, sanitizeClassName } from '../../src/cssUtils';
+import { findClassName, sanitizeClassName } from '../../cssUtils';
 
 import * as assert from 'assert';
 

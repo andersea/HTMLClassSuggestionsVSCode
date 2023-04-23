@@ -1,66 +1,71 @@
 {
-  "name": "html-class-suggestions",
-  "displayName": "HTML Class Suggestions",
-  "description": "Adds code completion suggestions to HTML class attributes based on the CSS files in your workspace.",
-  "version": "1.1.1",
-  "categories": [
-    "Programming Languages",
-    "Other"
-  ],
-  "keywords": [
-    "html",
-    "css"
-  ],
-  "publisher": "AndersEAndersen",
-  "author": {
-    "name": "Anders Ellenshøj Andersen",
-    "email": "andersa@atlab.dk"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/andersea/HTMLClassSuggestionsVSCode"
-  },
-  "bugs": {
-    "url": "https://github.com/andersea/HTMLClassSuggestionsVSCode/issues"
-  },
-  "icon": "images/icon.png",
-  "license": "MIT",
-  "preview": false,
-  "engines": {
-    "vscode": "^1.54.0"
-  },
-  "activationEvents": [
-    "onLanguage:html",
-    "onLanguage:cshtml",
-    "onLanguage:php",
-    "onLanguage:vue",
-    "onLanguage:typescriptreact",
-    "onLanguage:javascript"
-  ],
-  "main": "./out/src/extension",
-  "scripts": {
-    "vscode:prepublish": "tsc -p ./",
-    "compile": "tsc -watch -p ./",
-    "clean": "rimraf out/src/*",
-    "test": "node ./out/test/runTest.js"
-  },
-  "devDependencies": {
-    "@types/css": "0.0.31",
-    "@types/glob": "^8.1.0",
-    "@types/lodash.flow": "^3.5.6",
-    "@types/mocha": "^10.0.1",
-    "@types/node": "^16.x",
-    "@types/vscode": "^1.77.0",
-    "glob": "^8.1.0",
-    "mocha": "^10.2.0",
-    "rimraf": "^3.0.2",
-    "tslint": "^6.1.3",
-    "typescript": "^4.9.5",
-    "@vscode/test-electron": "^2.3.0"
-  },
-  "dependencies": {
-    "css": "^3.0.0",
-    "lodash.flow": "^3.5.0",
-    "xxhashjs": "^0.2.2"
-  }
+    "name": "html-class-suggestions",
+    "displayName": "HTML Class Suggestions",
+    "description": "Adds code completion suggestions to HTML class attributes based on the CSS files in your workspace.",
+    "version": "1.1.1",
+    "categories": [
+        "Programming Languages",
+        "Other"
+    ],
+    "keywords": [
+        "html",
+        "css"
+    ],
+    "publisher": "AndersEAndersen",
+    "author": {
+        "name": "Anders Ellenshøj Andersen",
+        "email": "andersa@atlab.dk"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/andersea/HTMLClassSuggestionsVSCode"
+    },
+    "bugs": {
+        "url": "https://github.com/andersea/HTMLClassSuggestionsVSCode/issues"
+    },
+    "icon": "images/icon.png",
+    "license": "MIT",
+    "preview": false,
+    "engines": {
+        "vscode": "^1.77.0"
+    },
+    "activationEvents": [
+        "onLanguage:html",
+        "onLanguage:cshtml",
+        "onLanguage:php",
+        "onLanguage:vue",
+        "onLanguage:typescriptreact",
+        "onLanguage:javascript"
+    ],
+    "main": "./out/src/extension",
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "clean": "rimraf out/src/*",
+        "pretest": "npm run compile && npm run lint",
+        "lint": "eslint src --ext ts",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/css": "^0.0.33",
+        "@types/glob": "^8.1.0",
+        "@types/lodash.flow": "^3.5.7",
+        "@types/mocha": "^10.0.1",
+        "@types/node": "16.x",
+        "@types/vscode": "^1.77.0",
+        "@typescript-eslint/eslint-plugin": "^5.56.0",
+        "@typescript-eslint/parser": "^5.56.0",
+        "@vscode/test-electron": "^2.3.0",
+        "eslint": "^8.36.0",
+        "glob": "^8.1.0",
+        "mocha": "^10.2.0",
+        "rimraf": "^3.0.2",
+        "typescript": "^4.9.5"
+    },
+    "dependencies": {
+        "css": "^3.0.0",
+        "lodash.flow": "^3.5.0",
+        "xxhashjs": "^0.2.2"
+    }
 }
