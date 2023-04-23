@@ -19,6 +19,12 @@ The extension is bundled with all necessary requirements, so it should be plug a
 
 ## Release Notes
 
+### 1.2.0
+
+* React support kindly contributed by [Marko Vujanic](https://github.com/ultrox)
+* Rebased project off of modern vscode extension template.
+* Updated dependencies
+
 ### 1.1.0
 
 * All dependencies upgraded.
