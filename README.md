@@ -1,6 +1,6 @@
 # HTML Class Suggestions
 
-html-class-suggestions is a Visual Studio Code extension that provides completion options for html class attributes based on the css files in your workspace.
+html-class-suggestions is a  Studio Code extension that provides completion options for html class attributes based on the csVisuals files in your workspace.
 
 ## Features
 
