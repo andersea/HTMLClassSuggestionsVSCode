@@ -68,11 +68,11 @@ export function findMediaRules(cssAST: Stylesheet): Rule[] {
 }
 
 export function findClassName(selector: string): string {
-    let classNameStartIndex = selector.lastIndexOf('.');
+    const classNameStartIndex = selector.lastIndexOf('.');
     if (classNameStartIndex >= 0) {
-        let classText = selector.substr(classNameStartIndex + 1);
+        const classText = selector.substr(classNameStartIndex + 1);
         // Search for one of ' ', '[', ':' or '>', that isn't escaped with a backslash
-        let classNameEndIndex = classText.search(/[^\\][\s\[:>]/);
+        const classNameEndIndex = classText.search(/[^\\][\s:>]/);
         if (classNameEndIndex >= 0) {
             return classText.substr(0, classNameEndIndex + 1);
         } else {

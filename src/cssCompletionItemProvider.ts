@@ -89,7 +89,7 @@ function isAttributeClosed(
     attributeName: AttributeName
 ): boolean {
     const attributeRegex = new RegExp(
-        `${attributeName}=(?:\"[a-zA-Z0-9-\\s]*\"|\'[a-zA-Z0-9-\\s]*\'|.*[=>])`
+        `${attributeName}=(?:"[a-zA-Z0-9-\\s]*"|'[a-zA-Z0-9-\\s]*'|.*[=>])`
     );
     return text.search(attributeRegex) === -1;
 }

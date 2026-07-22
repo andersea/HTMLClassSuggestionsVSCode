@@ -1,4 +1,4 @@
-let XXH = require('xxhashjs').h32;
+const XXH = require('xxhashjs').h32;
 
 export function flatten<T>(nestedArray: T[][]): T[] {
     if (nestedArray.length === 0) {
