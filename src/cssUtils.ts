@@ -55,15 +55,13 @@ export function getCSSClasses(selectors: string[]|Thenable<string[]>): Thenable<
 }
 
 export function findRootRules(cssAST: Stylesheet): Rule[] {
-    return cssAST.stylesheet!.rules.filter(node => (<Rule>node).type === 'rule');
+    return cssAST.stylesheet!.rules.filter((node): node is Rule => node.type === 'rule');
 }
 
 export function findMediaRules(cssAST: Stylesheet): Rule[] {
-    let mediaNodes = <Rule[]>(cssAST.stylesheet!.rules.filter(node => {
-        return (<Rule>node).type === 'media';
-    }));
+    const mediaNodes = cssAST.stylesheet!.rules.filter((node): node is Media => node.type === 'media');
     if (mediaNodes.length > 0) {
-        return flatten(mediaNodes.map(node => (<Media>node).rules!));
+        return flatten(mediaNodes.map(node => node.rules!.filter((r): r is Rule => r.type === 'rule')));
     } else {
         return [];
     }
