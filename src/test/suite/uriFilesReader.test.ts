@@ -1,5 +1,5 @@
 import uriFilesReader from "../../uriFilesReader";
-import * as assert from "assert";
+import assert from "assert";
 import { Uri } from "vscode";
 
 suite("Test uriFilesReader", () => {
