@@ -67,20 +67,26 @@ export function findMediaRules(cssAST: Stylesheet): Rule[] {
     }
 }
 
+/**
+ * Extracts the last CSS class name from a selector string.
+ * Handles escaped characters (e.g., \: \@ \/) by skipping them.
+ * Used to collect CSS class names for HTML autocomplete suggestions.
+ */
 export function findClassName(selector: string): string {
-    const classNameStartIndex = selector.lastIndexOf('.');
-    if (classNameStartIndex >= 0) {
-        const classText = selector.substr(classNameStartIndex + 1);
-        // Search for one of ' ', '[', ':' or '>', that isn't escaped with a backslash
-        const classNameEndIndex = classText.search(/[^\\][\s:>]/);
-        if (classNameEndIndex >= 0) {
-            return classText.substr(0, classNameEndIndex + 1);
-        } else {
-            return classText;
+    const lastDotIndex = selector.lastIndexOf('.');
+    if (lastDotIndex === -1) { return ''; }
+
+    const classText = selector.slice(lastDotIndex + 1);
+
+    for (let i = 0; i < classText.length; i++) {
+        if (classText[i] === '\\') {
+            i++; // Skip escaped character
+        } else if (/[\s[:>:]/.test(classText[i])) {
+            return classText.substring(0, i);
         }
-    } else {
-        return "";
     }
+
+    return classText;
 }
 
 export function sanitizeClassName(className: string): string {

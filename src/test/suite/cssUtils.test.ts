@@ -19,7 +19,10 @@ suite('Test cssUtils', () => {
         test('finds \'margin\\@palm\' in \'.margin\\@palm\'', () => {
             assert.equal(findClassName('.margin\\@palm'), 'margin\\@palm');
         });
-
+        test('finds \'foo\\\\\' in \'.foo\\\\:bar\' (double backslash - colon terminates)', () => {
+            // In CSS, \\\\ means literal backslash, so : is unescaped and terminates
+            assert.equal(findClassName('.foo\\\\:bar'), 'foo\\\\');
+        });
     });
     suite('#sanitizeClassName', () => {
         test('sanitizes \'u-1\\/2\' to \'u-1/2\'', () =>{
