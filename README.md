@@ -19,6 +19,12 @@ The extension is bundled with all necessary requirements, so it should be plug a
 
 ## Release Notes
 
+### 1.2.2
+
+* Fixed edge case in CSS class name extraction where escaped backslashes before terminators were not handled correctly.
+* Modernized findClassName implementation for better readability.
+* Upgraded development dependencies.
+
 ### 1.2.0
 
 * React support kindly contributed by [Marko Vujanic](https://github.com/ultrox)
