@@ -86,3 +86,6 @@ The extension is bundled with all necessary requirements, so it should be plug a
 ### 0.1.0
 
 * Initial release of html-class-suggestions.
+
+## References
+(representative:655cd9f9 )
