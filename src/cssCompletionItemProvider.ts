@@ -81,7 +81,7 @@ function getTextAfterAttributeStart(
     attributeName: AttributeName
 ): string {
     const lastAttributeOccurrence = lineUntilPosition.lastIndexOf(attributeName);
-    return lineUntilPosition.substr(lastAttributeOccurrence);
+    return lineUntilPosition.substring(lastAttributeOccurrence);
 }
 
 function isAttributeClosed(
